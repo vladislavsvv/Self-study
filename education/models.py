@@ -73,6 +73,7 @@ class Test(models.Model):
 
     question = models.CharField(max_length=300, verbose_name='вопрос по материалу', **NULLABLE)
     answer = models.CharField(max_length=4, choices=CHOICES_ANSWER, verbose_name='верный ответ', **NULLABLE)
+    material = models.ForeignKey(Material, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f'{self.question} верный ответ - {self.answer}'

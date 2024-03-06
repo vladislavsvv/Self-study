@@ -94,7 +94,10 @@ class TestAPIView(APIView):
     def post(self, request):
         answer_input = request.POST.get('answer_input')
         id_test = request.POST.get('id_test')
-        test = Test.objects.get(id=id_test)
+        material_id = request.POST.get('material_id')
+
+        material = Material.objects.get(id=material_id)
+        test = Test.objects.get(id=id_test, material=material)
 
         if answer_input != test.answer:
             return Response(f'Неверно, правильный ответ - {test.answer}')
