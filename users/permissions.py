@@ -1,9 +1,16 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class UserIsStaff(BasePermission):
     def has_permission(self, request, view):
-        if request.user.user_permissions:
+        return request.user.is_staff
+
+
+class UserIsOwnerOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        # Разрешить чтение всем
+        if request.method in SAFE_METHODS:
             return True
-        else:
-            return False
+
+        # Разрешить запись только владельцу объекта
+        return obj.owner == request.user
