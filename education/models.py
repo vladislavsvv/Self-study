@@ -54,6 +54,8 @@ class Material(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
 
+    tests = models.ForeignKey('Test', on_delete=models.CASCADE, **NULLABLE)
+
 
 
     def __str__(self):
