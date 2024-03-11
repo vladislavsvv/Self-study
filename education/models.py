@@ -54,8 +54,7 @@ class Material(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
 
-    # tests = models.ForeignKey('Test', on_delete=models.CASCADE, **NULLABLE)
-    tests = models.OneToOneField('Test', on_delete=models.CASCADE, verbose_name='тест по материалу', **NULLABLE)
+
 
     def __str__(self):
         return f'{self.title}'

@@ -87,37 +87,16 @@ class TestViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-# class TestAPIView(APIView):
-#     """ Отвечает за ввод ответа на тест и показ правильного ответа """
-#     permission_classes = [IsAuthenticated]
-#
-#     def post(self, request):
-#         answer_input = request.POST.get('answer_input')
-#         id_test = request.POST.get('id_test')
-#         test = Test.objects.get(id=id_test)
-#
-#         # answer_input = request.POST.get('answer_input')
-#         # id_test = request.POST.get('id_test')
-#         # material_id = request.POST.get('material_id')
-#         #
-#         # material = Material.objects.get(id=material_id)
-#         # test = Test.objects.get(id=id_test, material=material)
-#
-#         if answer_input != test.answer:
-#             return Response(f'Неверно, правильный ответ - {test.answer}')
-#         else:
-#             return Response('Верный ответ!')
-
 class TestAPIView(APIView):
     """ Отвечает за ввод ответа на тест и показ правильного ответа """
     permission_classes = [IsAuthenticated]
 
-    def material_detail(self, request, pk):
+    def material_detail(self, pk):
         material = Material.objects.get(pk=pk)
         tests = Test.objects.filter(material=material)
         return Response({'material': material, 'tests': tests})
 
-    def post(self, request, pk):
+    def post(self, request):
         answer_input = request.POST.get('answer_input')
         id_test = request.POST.get('id_test')
 

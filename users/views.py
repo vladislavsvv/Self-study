@@ -9,11 +9,17 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    # Разрешить создание и удаление только пользователям со статусом staff
-    permission_classes_by_action = {
-        'create': [UserIsStaff],
-        'destroy': [UserIsStaff],
-    }
+    def get_permissions(self):
+        # Разрешить создание и удаление только пользователям со статусом staff
+        if self.action in ['create', 'destroy']:
+            self.permission_classes = [UserIsStaff]
 
-    # Разрешить чтение и обновление только владельцу объекта или пользователям со статусом staff
-    permission_classes = [UserIsOwnerOrReadOnly]
+        # Разрешить чтение и обновление только владельцу объекта или пользователям со статусом staff
+        elif self.action in ['list', 'retrieve', 'update']:
+            self.permission_classes = [UserIsOwnerOrReadOnly]
+
+        # Разрешить всем просматривать список пользователей
+        elif self.action == 'list':
+            self.permission_classes = []
+
+        return super().get_permissions()
