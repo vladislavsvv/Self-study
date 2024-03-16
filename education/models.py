@@ -15,7 +15,6 @@ class Section(models.Model):
 
     description = models.TextField(verbose_name='описание раздела',
                                    **NULLABLE)
-
     date_create = models.DateField(verbose_name='дата создания',
                                    auto_now_add=True)
 

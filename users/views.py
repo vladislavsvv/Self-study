@@ -11,7 +11,7 @@ class UserViewSet(ModelViewSet):
 
     def get_permissions(self):
         # Разрешить создание и удаление только пользователям со статусом staff
-        if self.action in ['create', 'destroy']:
+        if self.action in ['destroy']:
             self.permission_classes = [UserIsStaff]
 
         # Разрешить чтение и обновление только владельцу объекта или пользователям со статусом staff

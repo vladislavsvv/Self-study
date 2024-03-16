@@ -22,12 +22,12 @@ class SectionViewSet(viewsets.ModelViewSet):
     """ Функция привязывает автора к его разделу"""
     def perform_create(self, serializer):
         serializer.save()
-        self.request.user.course_set.add(serializer.instance)
+        self.request.user.section_set.add(serializer.instance)
 
     """ Если юзер не модератор, функция показывает только его разделы"""
     def get_queryset(self):
         if not self.request.user.is_staff:
-            return Section.objects.filter(autor=self.request.user)
+            return Section.objects.filter(author=self.request.user)
         elif self.request.user.is_staff:
             return Section.objects.all()
 
