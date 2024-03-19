@@ -21,8 +21,9 @@ class SectionViewSet(viewsets.ModelViewSet):
 
     """ Функция привязывает автора к его разделу"""
     def perform_create(self, serializer):
-        serializer.save()
-        self.request.user.section_set.add(serializer.instance)
+        new_section = serializer.save()
+        new_section.author = self.request.user
+        new_section.save()
 
     """ Если юзер не модератор, функция показывает только его разделы"""
     def get_queryset(self):
